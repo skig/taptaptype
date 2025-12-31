@@ -1,4 +1,4 @@
-# shtyper
+# taptaptype
 
 terminal-based typing trainer
 
@@ -7,7 +7,7 @@ terminal-based typing trainer
 ## Usage
 
 ```bash
-./shtyper.sh [number_of_sessions]
+./taptaptype.sh [number_of_sessions]
 ```
 
-You can create an alias and run the shtyper when you have a couple of minutes to train typing skills while your project is compiling or "apt upgrade" is running
+You can create an alias and run the taptaptype when you have a couple of minutes to train typing skills while your project is compiling or "apt upgrade" is running

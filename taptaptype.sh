@@ -5,7 +5,7 @@
 # It prints the statistics at the end of session
 # It is possible to provide an argument N with amount of rerun sessions.
 # Usage
-# shtyper.sh [N]
+# taptaptype.sh [N]
 # N - optional number of sessions
 
 GREY=$'\033[90m'
