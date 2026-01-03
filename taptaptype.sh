@@ -138,15 +138,12 @@ calculate_stats_line() {
 
 update_stats_display() {
     local wpm_actual="$1"
-    local wpm_raw="$2"
-    local cpm_actual="$3"
-    local cpm_raw="$4"
-    local accuracy="$5"
-    local stats_line="$6"
+    local accuracy="$2"
+    local stats_line="$3"
 
     move_cursor_to "$stats_line" 1
-    printf "${CLEAR_LINE}  WPM: %.0f/%.0f  |  CPM: %.0f/%.0f  |  Accuracy: %.1f%%  |  Typos: %d/%d  |  Position: %d/%d" \
-           "$wpm_actual" "$wpm_raw" "$cpm_actual" "$cpm_raw" "$accuracy" "$MISTAKES" "$TOTAL_MISTAKES" "$CURRENT_POS" "${#TEXT}"
+    printf "${CLEAR_LINE}  WPM: %.0f Accuracy: %.1f%% | Position: %d/%d" \
+           "$wpm_actual" "$accuracy" "$CURRENT_POS" "${#TEXT}"
 }
 
 calculate_wpm() {
@@ -199,17 +196,8 @@ handle_input() {
     draw_initial_screen
     update_text_display "$TEXT" "$TYPED_TEXT" "$CURRENT_POS"
 
-    correct_chars=$((${#TYPED_TEXT} - MISTAKES))
-    wpm_actual=$(calculate_wpm "$correct_chars" "1")
-    wpm_raw=$(calculate_wpm "${#TYPED_TEXT}" "1")
-    cpm_actual=$(calculate_cpm "$correct_chars" "1")
-    cpm_raw=$(calculate_cpm "${#TYPED_TEXT}" "1")
-    accuracy=$(calculate_accuracy "$correct_chars" "${#TYPED_TEXT}")
-    update_stats_display "$wpm_actual" "$wpm_raw" "$cpm_actual" "$cpm_raw" "$accuracy" "$STATS_LINE"
-
     while (( CURRENT_POS < ${#TEXT} )); do
         read -rsn1 char
-
         if [[ $char == $'\e' ]]; then
             break
         fi
@@ -252,13 +240,10 @@ handle_input() {
         time_elapsed=$((current_time - START_TIME))
         correct_chars=$((${#TYPED_TEXT} - MISTAKES))
         wpm_actual=$(calculate_wpm "$correct_chars" "$time_elapsed")
-        wpm_raw=$(calculate_wpm "${#TYPED_TEXT}" "$time_elapsed")
-        cpm_actual=$(calculate_cpm "$correct_chars" "$time_elapsed")
-        cpm_raw=$(calculate_cpm "${#TYPED_TEXT}" "$time_elapsed")
         accuracy=$(calculate_accuracy "$correct_chars" "${#TYPED_TEXT}")
 
         update_text_display "$TEXT" "$TYPED_TEXT" "$CURRENT_POS"
-        update_stats_display "$wpm_actual" "$wpm_raw" "$cpm_actual" "$cpm_raw" "$accuracy" "$STATS_LINE"
+        update_stats_display "$wpm_actual" "$accuracy" "$STATS_LINE"
     done
 }
 
