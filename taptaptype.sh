@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# The script is a typing trainer
+# The script is a typing test
 # It shows a sample text that should be typed by a user
 # It prints the statistics at the end of session
 # It is possible to provide an argument N with amount of rerun sessions.

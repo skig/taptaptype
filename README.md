@@ -1,6 +1,6 @@
 # taptaptype
 
-terminal-based typing trainer
+terminal-based typing speed test, measures your CPM/WPM (characters and words per minute), written in a pure bash.
 
 ![Demo](demo.gif)
 
@@ -9,5 +9,3 @@ terminal-based typing trainer
 ```bash
 ./taptaptype.sh [number_of_sessions]
 ```
-
-You can create an alias and run the taptaptype when you have a couple of minutes to train typing skills while your project is compiling or "apt upgrade" is running
