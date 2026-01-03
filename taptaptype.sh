@@ -278,7 +278,7 @@ show_results() {
     printf "  Accuracy: %.1f%%\n" "$accuracy"
     printf "  Characters typed: %d\n" "${#TYPED_TEXT}"
     printf "  Typos: %d\n" "$MISTAKES"
-    printf "  Total typos: %d\n" "$TOTAL_MISTAKES"
+    printf "  Total typos (incl. fixed): %d\n" "$TOTAL_MISTAKES"
     printf "\n"
 }
 
@@ -300,7 +300,11 @@ main() {
     fi
 
     if ! command -v bc &> /dev/null; then
-        echo "Error: 'bc' calculator wasn't found."
+        echo "Error: 'bc' is required but not installed."
+        exit 1
+    fi
+    if ! command -v tput &> /dev/null; then
+        echo "Error: 'tput' is required but not installed."
         exit 1
     fi
 
@@ -374,7 +378,7 @@ local session_num=1
     done
 
     if (( repetitions > 1 )); then
-        printf "\n=== Summary ===\n"
+        printf "\n=== Summary ===\n\n"
         printf "Completed sessions: %d/%d\n" "$completed_sessions" "$repetitions"
 
         if (( completed_sessions > 0 )); then
@@ -386,7 +390,7 @@ local session_num=1
 
             printf "  Total time: %.1f seconds\n" "$(echo "scale=1; $total_time / 1000" | bc -l)"
             printf "  Total characters typed: %d\n" "$total_chars_typed"
-            printf "  Total typos: %d\n" "$total_typos"
+            printf "  Total typos (incl. fixed): %d\n" "$total_typos"
             printf "  Average WPM: %.0f/%.0f (real/raw)\n" "$avg_wpm_actual" "$avg_wpm_raw"
             printf "  Average CPM: %.0f/%.0f (real/raw)\n" "$avg_cpm_actual" "$avg_cpm_raw"
             printf "  Average accuracy: %.1f%%\n" "$avg_accuracy"
